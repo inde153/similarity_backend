@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { User } from './users/entities/user.entity';
 import { WordModule } from './word/word.module';
-import { DailyWordModule } from './daily_word/daily_word.module';
 
 @Module({
   imports: [
@@ -39,7 +38,6 @@ import { DailyWordModule } from './daily_word/daily_word.module';
     }),
     UsersModule,
     WordModule,
-    DailyWordModule,
   ],
   controllers: [],
   providers: [],

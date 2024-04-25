@@ -4,7 +4,7 @@ import { IsBoolean, IsEmail, IsEnum, IsString } from 'class-validator';
 
 @Entity()
 export class User extends CoreEntity {
-  @Column({ unique: true })
+  @Column()
   @IsString()
   username: string;
 

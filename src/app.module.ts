@@ -7,6 +7,8 @@ import { User } from './users/entities/user.entity';
 import { WordModule } from './words/word.module';
 import { Word } from './words/entities/word.entity';
 import { DailyWord } from './words/entities/daily-word.entity';
+import { RecordModule } from './records/record.module';
+import { Record } from './records/entities/record.entity';
 
 @Module({
   imports: [
@@ -36,10 +38,11 @@ import { DailyWord } from './words/entities/daily-word.entity';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [User, Word, DailyWord],
+      entities: [User, Word, DailyWord, Record],
     }),
     UsersModule,
     WordModule,
+    RecordModule,
   ],
   controllers: [],
   providers: [],

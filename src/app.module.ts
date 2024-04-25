@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { User } from './users/entities/user.entity';
 import { WordModule } from './words/word.module';
+import { Word } from './words/entities/word.entity';
+import { DailyWord } from './words/entities/daily-word.entity';
 
 @Module({
   imports: [
@@ -34,7 +36,7 @@ import { WordModule } from './words/word.module';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [User],
+      entities: [User, Word, DailyWord],
     }),
     UsersModule,
     WordModule,

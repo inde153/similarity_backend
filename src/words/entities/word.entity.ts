@@ -1,6 +1,6 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
-import { IsBoolean, IsEmail, isEnum, IsEnum, IsString } from 'class-validator';
+import { Column, Entity } from 'typeorm';
+import { IsEmail, IsEnum, IsString } from 'class-validator';
 
 export enum WordType {
   Noun = 'Noun',

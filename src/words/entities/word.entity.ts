@@ -1,23 +1,14 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, ManyToOne } from 'typeorm';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
 import { DailyWord } from './daily-word.entity';
-
-export enum WordType {
-  Noun = 'Noun',
-  Verb = 'Verb',
-  Adjective = 'Adjective',
-}
+import { Category } from './category.entity';
 
 @Entity()
 export class Word extends CoreEntity {
-  @Column()
+  @Column({ unique: true })
   @IsString()
   name: string;
-
-  @Column({ type: 'enum', enum: WordType })
-  @IsEnum(WordType)
-  type: WordType;
 
   @Column({ type: 'json' })
   @IsEmail()
@@ -25,4 +16,7 @@ export class Word extends CoreEntity {
 
   @OneToMany(() => DailyWord, (dailyWord) => dailyWord.word)
   dailyWord: DailyWord;
+
+  @ManyToOne(() => Category, (category) => category.id)
+  category: Category;
 }

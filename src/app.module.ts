@@ -10,6 +10,7 @@ import { DailyWord } from './words/entities/daily-word.entity';
 import { RecordModule } from './records/record.module';
 import { Guees } from './records/entities/guees.entity';
 import { ScoreInfo } from './records/entities/score-info.entity';
+import { Category } from './words/entities/category.entity';
 
 @Module({
   imports: [
@@ -39,7 +40,7 @@ import { ScoreInfo } from './records/entities/score-info.entity';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [User, Word, DailyWord, Guees, ScoreInfo],
+      entities: [User, Word, DailyWord, Guees, ScoreInfo, Category],
     }),
     UsersModule,
     WordModule,

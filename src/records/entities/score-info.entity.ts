@@ -3,16 +3,12 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import { IsEmail, IsNumber, IsString } from 'class-validator';
 
 @Entity()
-export class Record extends CoreEntity {
-  @Column()
-  @IsNumber()
-  userId: number;
-
+export class ScoreInfo extends CoreEntity {
   @Column({ unique: true })
   @IsNumber()
-  dailyWordId: number;
+  tryCount: number;
 
   @Column()
   @IsNumber()
-  tryCount: number;
+  score: number;
 }

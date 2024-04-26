@@ -8,7 +8,8 @@ import { WordModule } from './words/word.module';
 import { Word } from './words/entities/word.entity';
 import { DailyWord } from './words/entities/daily-word.entity';
 import { RecordModule } from './records/record.module';
-import { Record } from './records/entities/record.entity';
+import { Guees } from './records/entities/solver.entity';
+import { ScoreInfo } from './records/entities/score-info.entity';
 
 @Module({
   imports: [
@@ -38,7 +39,7 @@ import { Record } from './records/entities/record.entity';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [User, Word, DailyWord, Record],
+      entities: [User, Word, DailyWord, Guees, ScoreInfo],
     }),
     UsersModule,
     WordModule,

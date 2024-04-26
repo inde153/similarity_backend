@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { RecordService } from './record.service';
 import { RecordController } from './record.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Record } from './entities/record.entity';
+import { Guees } from './entities/solver.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Record])],
+  imports: [TypeOrmModule.forFeature([Guees])],
   controllers: [RecordController],
   providers: [RecordService],
 })

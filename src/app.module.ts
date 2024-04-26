@@ -8,7 +8,7 @@ import { WordModule } from './words/word.module';
 import { Word } from './words/entities/word.entity';
 import { DailyWord } from './words/entities/daily-word.entity';
 import { RecordModule } from './records/record.module';
-import { Guees } from './records/entities/solver.entity';
+import { Guees } from './records/entities/guees.entity';
 import { ScoreInfo } from './records/entities/score-info.entity';
 
 @Module({

@@ -12,6 +12,7 @@ import { Guees } from './records/entities/guees.entity';
 import { ScoreInfo } from './records/entities/score-info.entity';
 import { Category } from './words/entities/category.entity';
 import { ChatModule } from './chat/chat.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { ChatModule } from './chat/chat.module';
     WordModule,
     RecordModule,
     ChatModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

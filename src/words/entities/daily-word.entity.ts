@@ -7,14 +7,14 @@ import {
   OneToMany,
   ManyToOne,
 } from 'typeorm';
-import { IsBoolean, IsEmail, IsEnum, IsString } from 'class-validator';
+import { IsNumber } from 'class-validator';
 import { Guees } from 'src/records/entities/guees.entity';
 import { Word } from './word.entity';
 
 @Entity()
 export class DailyWord extends CoreEntity {
   @Column()
-  @IsString()
+  @IsNumber()
   wordId: number;
 
   @OneToMany(() => Guees, (guees) => guees.user)

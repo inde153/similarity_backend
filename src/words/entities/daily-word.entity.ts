@@ -20,6 +20,8 @@ export class DailyWord extends CoreEntity {
   @OneToMany(() => Guees, (guees) => guees.user)
   guees: Guees;
 
-  @ManyToOne(() => Word, (word) => word.id)
+  @ManyToOne(() => Word, (word) => word.id, {
+    eager: true,
+  })
   word: Word;
 }

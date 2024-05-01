@@ -10,7 +10,7 @@ export class Word extends CoreEntity {
   @IsString()
   name: string;
 
-  @Column({ type: 'json' })
+  @Column({ type: 'json', nullable: true })
   @IsEmail()
   embedding: any;
 

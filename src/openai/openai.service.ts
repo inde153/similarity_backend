@@ -14,5 +14,11 @@ export class OpenaiService {
     });
   }
 
-  async getEmbedding() {}
+  async getEmbedding(word: string) {
+    return this.openai.embeddings.create({
+      model: 'text-embedding-3-small',
+      input: `${word}`,
+      encoding_format: 'float',
+    });
+  }
 }

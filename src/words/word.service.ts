@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DailyWord } from './entities/daily-word.entity';
@@ -7,16 +7,12 @@ import { DailyWord } from './entities/daily-word.entity';
 export class WordService {
   constructor(
     @InjectRepository(DailyWord)
-    private readonly dailyWord: Repository<DailyWord>,
+    private readonly dailyWordRepository: Repository<DailyWord>,
   ) {}
 
   async getDailyWord() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return this.dailyWord.findOne({
+    return this.dailyWordRepository.findOne({
       where: { id: 1 },
     });
   }
-
-  async setEmbedding() {}
 }

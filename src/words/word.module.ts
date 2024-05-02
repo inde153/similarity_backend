@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DailyWord } from './entities/daily-word.entity';
 import { Word } from './entities/word.entity';
 import { Category } from './entities/category.entity';
-import { OpenaiService } from 'src/openai/openai.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([DailyWord, Word, Category])],

@@ -7,13 +7,6 @@ export class WordController {
 
   @Get('')
   async getDailyWord() {
-    const res = await this.wordService.getDailyWord();
-
-    console.log(res);
-  }
-
-  @Get('embedding')
-  async setEmbedding() {
-    const res = await this.wordService.setEmbedding();
+    return this.wordService.getDailyWord();
   }
 }

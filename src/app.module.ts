@@ -13,6 +13,8 @@ import { ScoreInfo } from './records/entities/score-info.entity';
 import { Category } from './words/entities/category.entity';
 import { ChatModule } from './chat/chat.module';
 import { AuthModule } from './auth/auth.module';
+import { OpenaiService } from './openai/openai.service';
+import { OpenaiModule } from './openai/openai.module';
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
+        OPENAI_API_KEY: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -44,11 +47,15 @@ import { AuthModule } from './auth/auth.module';
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
       entities: [User, Word, DailyWord, Guees, ScoreInfo, Category],
     }),
+    OpenaiModule.forRoot({
+      apiKey: process.env.OPENAI_API_KEY,
+    }),
     UsersModule,
     WordModule,
     RecordModule,
     ChatModule,
     AuthModule,
+    OpenaiModule,
   ],
   controllers: [],
   providers: [],

@@ -11,4 +11,9 @@ export class WordController {
 
     console.log(res);
   }
+
+  @Get('embedding')
+  async setEmbedding() {
+    const res = await this.wordService.setEmbedding();
+  }
 }

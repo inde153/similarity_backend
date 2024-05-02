@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DailyWord } from './entities/daily-word.entity';
@@ -17,4 +17,6 @@ export class WordService {
       where: { id: 1 },
     });
   }
+
+  async setEmbedding() {}
 }

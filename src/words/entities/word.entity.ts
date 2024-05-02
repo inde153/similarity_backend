@@ -10,9 +10,9 @@ export class Word extends CoreEntity {
   @IsString()
   name: string;
 
-  @Column({ type: 'json', nullable: true })
-  @IsJSON()
-  embedding: any;
+  @Column({ nullable: true })
+  @IsString()
+  embedding: string;
 
   @OneToMany(() => DailyWord, (dailyWord) => dailyWord.word)
   dailyWord: DailyWord;

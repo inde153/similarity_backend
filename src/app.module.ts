@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { User } from './users/entities/user.entity';
@@ -46,6 +46,11 @@ import { OpenaiModule } from './openai/openai.module';
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
       entities: [User, Word, DailyWord, Guees, ScoreInfo, Category],
+      extra: {
+        postgres: {
+          extensions: ['pgvector'],
+        },
+      },
     }),
     OpenaiModule.forRoot({
       apiKey: process.env.OPENAI_API_KEY,

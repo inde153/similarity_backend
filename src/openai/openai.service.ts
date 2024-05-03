@@ -14,7 +14,7 @@ export class OpenaiService {
     });
   }
 
-  async getEmbedding(word: string) {
+  async getEmbedding(word: string): Promise<any> {
     return this.openai.embeddings.create({
       model: 'text-embedding-3-small',
       input: `${word}`,

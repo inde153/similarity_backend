@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OpenaiService } from 'src/openai/openai.service';
 import { Word } from 'src/words/entities/word.entity';
@@ -11,12 +11,20 @@ export class RecordService {
     private readonly wordRepository: Repository<Word>,
     private readonly openaiService: OpenaiService,
   ) {}
-  async getEmbedding(word) {
-    const res = await this.wordRepository.findOne({
+  async getEmbedding(word: string) {
+    const data = await this.wordRepository.findOne({
       where: { name: word },
     });
-    if (!res) {
-      // const res = await this.openaiService.getEmbedding(word);
+
+    if (!data) {
+      return '';
+    }
+
+    if (!data.embedding) {
+      const embedding = await this.openaiService.getEmbedding(word);
+      await this.wordRepository.update(data.id, {
+        embedding: embedding.data[0].embedding,
+      });
     }
   }
 }

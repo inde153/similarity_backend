@@ -1,6 +1,6 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
-import { IsBoolean, IsEmail, IsEnum, IsString } from 'class-validator';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 import { Guees } from 'src/records/entities/guees.entity';
 
 @Entity()
@@ -17,6 +17,10 @@ export class User extends CoreEntity {
   @IsString()
   loginType: string;
 
+  @Column()
+  @IsNumber()
+  score: number;
+
   @OneToMany(() => Guees, (guees) => guees.user)
-  guees: Guees;
+  guees: Guees[];
 }

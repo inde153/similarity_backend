@@ -13,5 +13,5 @@ export class GetWordInput {
 }
 
 export class GetWordOutput extends CoreOutput {
-  data: Word | {};
+  data: { similarity: number };
 }

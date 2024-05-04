@@ -23,6 +23,7 @@ export class RecordService {
     });
 
     if (!embedding) {
+      //openAI서비스로 빼기
       const embe = await this.openaiService.getEmbedding(body.name);
       embedding = pgvector.toSql(embe.data[0].embedding);
       await this.wordRepository.update(id, {
@@ -34,10 +35,9 @@ export class RecordService {
       where: { id: 10 },
     });
 
-    const number1 = embedding.slice(1, -1).split(',').map(Number);
-    const number2 = dailyWord.slice(1, -1).split(',').map(Number);
+    const similarity = this.cosineSimilarity(embedding, dailyWord);
 
-    const similarity = this.cosineSimilarity(number1, number2);
+    // if() scoreInfo에 저장해야 함
 
     return {
       ok: true,
@@ -46,7 +46,10 @@ export class RecordService {
     };
   }
 
-  private cosineSimilarity(vecA: number[], vecB: number[]): number {
+  private cosineSimilarity(embedding: string, dailyWord: string): number {
+    const vecA = embedding.slice(1, -1).split(',').map(Number);
+    const vecB = dailyWord.slice(1, -1).split(',').map(Number);
+
     let dotProduct = 0.0;
     let normA = 0.0;
     let normB = 0.0;

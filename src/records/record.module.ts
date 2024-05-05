@@ -12,4 +12,4 @@ import { DailyWord } from 'src/words/entities/daily-word.entity';
   controllers: [RecordController],
   providers: [RecordService],
 })
-export class RecordModule {}
+export class RecordsModule {}

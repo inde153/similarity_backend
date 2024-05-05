@@ -11,4 +11,4 @@ import { Category } from './entities/category.entity';
   controllers: [WordController],
   providers: [WordService],
 })
-export class WordModule {}
+export class WordsModule {}

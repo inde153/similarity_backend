@@ -17,9 +17,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-  ): Promise<any> {
-    return {
-      profile,
-    };
+  ): Promise<Profile> {
+    return profile;
   }
 }

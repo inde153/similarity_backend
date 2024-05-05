@@ -4,7 +4,7 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  const PORT = 8080;
   const corsOptions: CorsOptions = {
     origin: '*',
     methods: '*',
@@ -14,6 +14,6 @@ async function bootstrap() {
   };
 
   app.enableCors(corsOptions);
-  await app.listen(3000);
+  await app.listen(PORT);
 }
 bootstrap();

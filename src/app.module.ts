@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { User } from './users/entities/user.entity';
-import { WordModule } from './words/word.module';
+import { WordsModule } from './words/word.module';
 import { Word } from './words/entities/word.entity';
 import { DailyWord } from './words/entities/daily-word.entity';
-import { RecordModule } from './records/record.module';
+import { RecordsModule } from './records/record.module';
 import { Guees } from './records/entities/guees.entity';
 import { ScoreInfo } from './records/entities/score-info.entity';
 import { Category } from './words/entities/category.entity';
 import { ChatModule } from './chat/chat.module';
 import { AuthModule } from './auth/auth.module';
-import { OpenaiService } from './openai/openai.service';
 import { OpenaiModule } from './openai/openai.module';
+import { JwtModule } from './jwt/jwt.module';
 
 @Module({
   imports: [
@@ -33,6 +33,12 @@ import { OpenaiModule } from './openai/openai.module';
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
         OPENAI_API_KEY: Joi.string().required(),
+        JWT_SECRET_ACCESS_KEY: Joi.string().required(),
+        JWT_SECRET_REFRESH_KEY: Joi.string().required(),
+        JWT_SECRET_ACCESS_EXPIRATION: Joi.string().required(),
+        JWT_SECRET_REFRESH_EXPIRATION: Joi.string().required(),
+        GOOGLE_CLIENT_ID: Joi.string().required(),
+        GOOGLE_SECRET_KEY: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -55,12 +61,17 @@ import { OpenaiModule } from './openai/openai.module';
     OpenaiModule.forRoot({
       apiKey: process.env.OPENAI_API_KEY,
     }),
+    JwtModule.forRoot({
+      accessKey: process.env.JWT_SECRET_ACCESS_KEY,
+      accessExpiration: process.env.JWT_SECRET_ACCESS_EXPIRATION,
+      refreshKey: process.env.JWT_SECRET_REFRESH_KEY,
+      refreshExpiration: process.env.JWT_SECRET_REFRESH_EXPIRATION,
+    }),
     UsersModule,
-    WordModule,
-    RecordModule,
+    WordsModule,
+    RecordsModule,
     ChatModule,
     AuthModule,
-    OpenaiModule,
   ],
   controllers: [],
   providers: [],

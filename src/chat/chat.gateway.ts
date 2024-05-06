@@ -10,7 +10,7 @@ import {
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 
-@WebSocketGateway({ namespace: 'socket', cors: true })
+@WebSocketGateway(9050, { namespace: 'chat', cors: true })
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -34,7 +34,6 @@ export class ChatGateway
   handleEvent(client: Socket, data: string): WsResponse<string> {
     const username = 'User'; // Replace with user authentication logic
     const timestamp = new Date().toLocaleTimeString();
-
     const response: WsResponse<string> = {
       event: 'message',
       data: `${timestamp} - ${username}: ${data}`,

@@ -9,7 +9,7 @@ import { Observable, map, tap } from 'rxjs';
 import { CoreOutput } from '../dtos/output.dto';
 
 @Injectable()
-export class LogginInterceptor implements NestInterceptor {
+export class APIInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler,

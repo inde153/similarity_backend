@@ -1,14 +1,8 @@
-import {
-  Controller,
-  Get,
-  Req,
-  Res,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Payload } from 'src/jwt/interfaces';
+import { Payload } from 'src/common/interfaces';
 import { JwtService } from 'src/jwt/jwt.service';
+import { UserLoginType } from 'src/users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { LoginOutput } from './dots/login-auth.dto';
 
@@ -29,7 +23,10 @@ export class AuthController {
     @Req() req,
     @Res({ passthrough: true }) res,
   ): Promise<LoginOutput> {
-    const userInfo = await this.authService.login(req.user, 'google');
+    const userInfo = await this.authService.login(
+      req.user,
+      UserLoginType.Google,
+    );
     const { id, username, loginType } = userInfo;
 
     const payload: Payload = { id, username, loginType };

@@ -3,6 +3,11 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { IsEmail, IsNumber, IsString } from 'class-validator';
 import { Guees } from 'src/records/entities/guees.entity';
 
+export enum UserLoginType {
+  Google = 'Google',
+  Kakao = 'Kakao',
+}
+
 @Entity()
 export class User extends CoreEntity {
   @Column()
@@ -15,7 +20,7 @@ export class User extends CoreEntity {
 
   @Column({ default: 'GUEST' })
   @IsString()
-  loginType: string;
+  loginType: UserLoginType;
 
   @Column({ default: 0 })
   @IsNumber()

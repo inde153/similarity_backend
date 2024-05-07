@@ -12,6 +12,6 @@ export class GetWordInput {
   categoryID: number;
 }
 
-export class GetWordOutput extends CoreOutput {
-  data: { similarity: number };
+export class GetWordOutput {
+  similarity: number;
 }

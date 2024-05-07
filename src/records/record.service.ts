@@ -40,9 +40,7 @@ export class RecordService {
     // if() scoreInfo에 저장해야 함
 
     return {
-      ok: true,
-      error: '',
-      data: { similarity },
+      similarity,
     };
   }
 

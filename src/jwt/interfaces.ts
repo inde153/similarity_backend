@@ -1,5 +1,7 @@
 export interface Payload {
-  id: string;
+  id: number;
+  username: string;
+  loginType: string;
 }
 
 export interface JwtModuleOptions {

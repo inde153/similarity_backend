@@ -17,7 +17,7 @@ export class User extends CoreEntity {
   @IsString()
   loginType: string;
 
-  @Column()
+  @Column({ default: 0 })
   @IsNumber()
   score: number;
 

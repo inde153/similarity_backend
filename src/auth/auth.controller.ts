@@ -7,7 +7,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { LogginInterceptor } from 'src/common/interceptors/Interceptor';
 import { Payload } from 'src/jwt/interfaces';
 import { JwtService } from 'src/jwt/jwt.service';
 import { AuthService } from './auth.service';
@@ -26,7 +25,6 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  @UseInterceptors(LogginInterceptor)
   async googleAuthCallback(
     @Req() req,
     @Res({ passthrough: true }) res,

@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import { APIInterceptor } from './common/interceptors/Interceptor';
+import { HttpExceptionFilter } from './common/exception/HttpExceptionFilter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +16,9 @@ async function bootstrap() {
   };
 
   app.enableCors(corsOptions);
+
+  app.useGlobalFilters(new HttpExceptionFilter());
+
   await app.listen(PORT);
 }
 bootstrap();

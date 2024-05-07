@@ -21,4 +21,8 @@ export class JwtService {
       expiresIn: this.options.refreshExpiration,
     });
   }
+
+  verifyAccessToken(token: string) {
+    return jwt.verify(token, this.options.accessKey);
+  }
 }

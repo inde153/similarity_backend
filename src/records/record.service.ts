@@ -4,7 +4,6 @@ import { OpenaiService } from 'src/openai/openai.service';
 import { Word } from 'src/words/entities/word.entity';
 import { Repository } from 'typeorm';
 import { GetWordInput } from './dtos/get-guess.dto';
-import * as pgvector from 'pgvector/pg';
 import { DailyWord } from 'src/words/entities/daily-word.entity';
 
 @Injectable()
@@ -22,13 +21,16 @@ export class RecordService {
       where: { name: body.name },
     });
 
+    // 특정 유저의 count를 1 증가시킵니다.
+    // await this.gueesRepository
+    // .createQueryBuilder()
+    // .update(Geees)
+    // .set({ count: () => "count + 1" })
+    // .where("userId = :userId", { userId })
+    // .execute();
+
     if (!embedding) {
-      //openAI서비스로 빼기
-      const embe = await this.openaiService.getEmbedding(body.name);
-      embedding = pgvector.toSql(embe.data[0].embedding);
-      await this.wordRepository.update(id, {
-        embedding,
-      });
+      embedding = await this.openaiService.getEmbedding(id, body.name);
     }
 
     const { embedding: dailyWord } = await this.wordRepository.findOne({
@@ -36,12 +38,11 @@ export class RecordService {
     });
 
     const similarity = this.cosineSimilarity(embedding, dailyWord);
+    if (~~similarity) {
+      // 1인경우 정답 맞춘 유저
+    }
 
-    // if() scoreInfo에 저장해야 함
-
-    return {
-      similarity,
-    };
+    return { similarity };
   }
 
   private cosineSimilarity(embedding: string, dailyWord: string): number {

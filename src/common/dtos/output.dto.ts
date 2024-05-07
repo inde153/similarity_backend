@@ -1,4 +1,6 @@
 export class CoreOutput {
-  error?: string;
-  ok?: boolean;
+  success: boolean;
+  message: string;
+  errorCode: number;
+  data: object | [];
 }

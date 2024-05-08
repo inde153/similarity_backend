@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { CONFIG_OPTIONS } from 'src/common/common.constants';
 import { JwtModuleOptions } from './interfaces';
@@ -23,6 +23,10 @@ export class JwtService {
   }
 
   verifyAccessToken(token: string) {
-    return jwt.verify(token, this.options.accessKey);
+    try {
+      return jwt.verify(token, this.options.accessKey);
+    } catch (e) {
+      throw new HttpException({ message: e.message }, HttpStatus.FORBIDDEN);
+    }
   }
 }

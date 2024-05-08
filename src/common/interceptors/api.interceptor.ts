@@ -21,7 +21,6 @@ export class APIInterceptor implements NestInterceptor {
     logger.log(`${path}`);
 
     return next.handle().pipe(
-      tap((data) => console.log(data)),
       map(
         (data): CoreOutput => ({
           success: true,

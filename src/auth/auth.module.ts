@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtService } from '@nestjs/jwt';
-import { GoogleStrategy } from 'src/common/auth/GoogleStrategy';
+import { GoogleStrategy } from 'src/common/auth/google.strategy';
 import { UsersModule } from 'src/users/users.module';
 
 @Module({

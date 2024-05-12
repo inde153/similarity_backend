@@ -29,4 +29,13 @@ export class JwtService {
       throw new HttpException({ message: e.message }, HttpStatus.FORBIDDEN);
     }
   }
+
+  verifyRefreshToken(token: string): any {
+    try {
+      return jwt.verify(token, this.options.refreshKey);
+    } catch (e) {
+      console.log(e);
+      throw new HttpException({ message: e.message }, HttpStatus.FORBIDDEN);
+    }
+  }
 }

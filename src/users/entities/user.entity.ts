@@ -6,7 +6,7 @@ import { Guees } from 'src/records/entities/guees.entity';
 export enum UserLoginType {
   Guest = 'Guest',
   Google = 'Google',
-  Kakao = 'Kakao',
+  Email = 'Email',
 }
 
 @Entity()

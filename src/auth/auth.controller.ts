@@ -21,7 +21,8 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   async googleAuthCallback(
     @Req() req,
-    @Res({ passthrough: true }) res,
+    // @Res({ passthrough: true }) res, 리턴 패스
+    @Res() res,
   ): Promise<LoginOutput> {
     const userInfo = await this.authService.login(
       req.user,
@@ -37,7 +38,37 @@ export class AuthController {
     res.cookie('refresh', refreshToken, {
       httpOnly: true,
     });
+    res.cookie('access', accessToken, {
+      httpOnly: true,
+    });
 
-    return { accessToken };
+    return res.status(200).redirect(process.env.CLINET_URI);
+  }
+  // @UseGuards(AuthGuard('refresh'))
+  @Get('refresh')
+  async getRefreshToken(@Req() req, @Res({ passthrough: true }) res) {
+    const token = req.cookies?.refresh;
+
+    if (!token) {
+      return { role: 'Guest' };
+    }
+
+    const payload: Payload = (({ id, username, loginType }) => ({
+      id,
+      username,
+      loginType,
+    }))(this.jwtService.verifyRefreshToken(token));
+
+    const accessToken: string = this.jwtService.createAccessToken(payload)!;
+    const refreshToken: string = this.jwtService.createRefreshToken(payload)!;
+
+    res.cookie('refresh', refreshToken, {
+      httpOnly: true,
+    });
+    res.cookie('access', accessToken, {
+      httpOnly: true,
+    });
+
+    return { role: 'Google' };
   }
 }

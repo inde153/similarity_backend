@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Payload } from 'src/common/interfaces';
 import { Repository } from 'typeorm';
 import { User, UserLoginType } from './entities/user.entity';
 
@@ -17,8 +18,13 @@ export class UsersService {
   }
 
   async createUserInfo(email: string, loginType: UserLoginType): Promise<User> {
+    const username = email.split('@')[0];
     return await this.userRepository.save(
-      this.userRepository.create({ email, loginType, username: email }),
+      this.userRepository.create({ email, loginType, username }),
     );
+  }
+
+  async getUserInfo(id: number): Promise<User> {
+    return this.userRepository.findOne({ where: { id } });
   }
 }

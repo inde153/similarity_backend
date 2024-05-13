@@ -1,6 +1,19 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Role } from 'src/common/auth/role.decorator';
+import { RoleGuard } from 'src/common/auth/role.guard';
+import { User } from './entities/user.entity';
+import { UsersService } from './users.service';
 
-@Controller('users')
+@Controller('user')
 export class UsersController {
-  constructor() {}
+  constructor(private readonly userService: UsersService) {}
+
+  @UseGuards(AuthGuard('access'))
+  @Role(['Google'])
+  @UseGuards(RoleGuard)
+  @Get('/profile')
+  async getUserInfo(@Req() req): Promise<User> {
+    return this.userService.getUserInfo(req.user.id);
+  }
 }

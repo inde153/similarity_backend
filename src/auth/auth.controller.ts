@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Payload } from 'src/common/interfaces';
 import { JwtService } from 'src/jwt/jwt.service';
@@ -70,5 +70,13 @@ export class AuthController {
     });
 
     return { loginType: 'Google', username: payload.username };
+  }
+
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) res) {
+    res.clearCookie('refresh');
+    res.clearCookie('access');
+
+    return {};
   }
 }

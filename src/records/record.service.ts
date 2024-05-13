@@ -37,10 +37,9 @@ export class RecordService {
       where: { id: 10 },
     });
 
-    const similarity = this.cosineSimilarity(embedding, dailyWord);
-    if (~~similarity) {
-      // 1인경우 정답 맞춘 유저
-    }
+    const similarity = Number(
+      (this.cosineSimilarity(embedding, dailyWord) * 100).toFixed(2),
+    );
 
     return { similarity };
   }

@@ -44,13 +44,13 @@ export class AuthController {
 
     return res.status(200).redirect(process.env.CLINET_URI);
   }
-  // @UseGuards(AuthGuard('refresh'))
+
   @Get('refresh')
   async getRefreshToken(@Req() req, @Res({ passthrough: true }) res) {
     const token = req.cookies?.refresh;
 
     if (!token) {
-      return { role: 'Guest' };
+      return null;
     }
 
     const payload: Payload = (({ id, username, loginType }) => ({
@@ -69,6 +69,6 @@ export class AuthController {
       httpOnly: true,
     });
 
-    return { role: 'Google' };
+    return { loginType: 'Google', username: payload.username };
   }
 }

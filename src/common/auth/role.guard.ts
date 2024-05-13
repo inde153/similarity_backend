@@ -16,11 +16,13 @@ export class RoleGuard implements CanActivate {
       'roles', //@Role 데코레이터에서 roles라는 키를 가져온다.
       context.getHandler(),
     );
+
     if (!roles || roles.includes('Any')) {
       return true;
     }
+
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.cookie.access;
+    const token = request.cookies.access;
 
     if (token) {
       const decoded = this.jwtService.verifyAccessToken(token);

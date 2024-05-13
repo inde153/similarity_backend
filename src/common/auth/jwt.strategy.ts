@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
+import { JwtService } from 'src/jwt/jwt.service';
 
 @Injectable()
-export class RefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
-  constructor() {
+export class AccessStrategy extends PassportStrategy(Strategy, 'access') {
+  constructor(private readonly jwtService: JwtService) {
     super({
       jwtFromRequest: (req) => {
-        const cookie = req.cookies['refresh'];
+        const cookie = req.cookies?.refresh;
         return cookie;
       },
       ignoreExpiration: false,

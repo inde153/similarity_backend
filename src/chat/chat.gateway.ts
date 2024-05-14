@@ -52,11 +52,11 @@ export class ChatGateway
 
   @SubscribeMessage('getOldComments')
   getOldComments(client: Socket, test: string): ChatOutputDTO[] {
-    return this.comments.slice(-10);
+    return this.comments.slice(-50);
   }
 
   @SubscribeMessage('sendMessage')
-  handleMessage(client: Socket, data): any {
+  handleMessage(client: Socket, data): void {
     const timestamp = moment(new Date()).format('HH:mm:ss');
     const username = data.username;
 
@@ -76,7 +76,5 @@ export class ChatGateway
     }
 
     this.server.emit('getMessage', messageData);
-
-    return 'ok';
   }
 }

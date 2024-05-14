@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { RoleGuard } from 'src/common/auth/role.guard';
-import { Role } from 'src/common/auth/role.decorator';
+import { Role } from 'src/common/decorators/role.decorator';
 import { GetWordInput, GetWordOutput } from './dtos/get-guess.dto';
 import { RecordService } from './record.service';
 

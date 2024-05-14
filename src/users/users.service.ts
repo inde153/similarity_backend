@@ -29,9 +29,11 @@ export class UsersService {
     return this.userRepository.findOne({ where: { id } });
   }
 
-  async setUserProfile(updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(updateUserDto.id, {
+  async setUserProfile(updateUserDto: UpdateUserDto, user: Payload) {
+    await this.userRepository.update(user.id, {
       username: updateUserDto.username,
     });
+
+    return {};
   }
 }

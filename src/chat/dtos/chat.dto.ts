@@ -9,6 +9,7 @@ export class SetInitDTO {
 export class ChatOutputDTO {
   id: string;
   username: string;
+  email: string;
   message: string;
-  date: Date;
+  date: string;
 }

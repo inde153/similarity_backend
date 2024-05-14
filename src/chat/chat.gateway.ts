@@ -10,6 +10,7 @@ import {
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { ChatOutputDTO, SetInitDTO } from './dtos/chat.dto';
+import * as moment from 'moment';
 
 @WebSocketGateway({
   namespace: 'chat',
@@ -21,14 +22,7 @@ export class ChatGateway
   @WebSocketServer()
   server: Server;
   private logger = new Logger('ChatGateway');
-  private comments = [
-    {
-      id: 'sfnjkaso3287snz',
-      username: 'anonymous',
-      message: '오 맞춤',
-      date: new Date(),
-    },
-  ];
+  private comments = [];
 
   afterInit(server: Server) {
     this.server = server;
@@ -62,12 +56,13 @@ export class ChatGateway
   }
 
   @SubscribeMessage('sendMessage')
-  handleMessage(client: Socket, data): void {
-    const timestamp = new Date();
+  handleMessage(client: Socket, data): any {
+    const timestamp = moment(new Date()).format('HH:mm:ss');
     const username = data.username;
 
     const messageData = {
       id: client.id, // or generate a unique ID for the message
+      email: data.email,
       username: username,
       message: data.message,
       date: timestamp,
@@ -80,6 +75,8 @@ export class ChatGateway
       this.comments.push(messageData);
     }
 
-    client.broadcast.emit('getMessage', messageData); // or client.broadcast.emit to exclude the sender
+    this.server.emit('getMessage', messageData);
+
+    return 'ok';
   }
 }

@@ -28,9 +28,9 @@ export class AuthController {
       req.user,
       UserLoginType.Google,
     );
-    const { id, username, loginType } = userInfo;
+    const { id, username, loginType, email } = userInfo;
 
-    const payload: Payload = { id, username, loginType };
+    const payload: Payload = { id, username, loginType, email };
 
     const accessToken: string = this.jwtService.createAccessToken(payload)!;
     const refreshToken: string = this.jwtService.createRefreshToken(payload)!;
@@ -53,9 +53,10 @@ export class AuthController {
       return null;
     }
 
-    const payload: Payload = (({ id, username, loginType }) => ({
+    const payload: Payload = (({ id, username, loginType, email }) => ({
       id,
       username,
+      email,
       loginType,
     }))(this.jwtService.verifyRefreshToken(token));
 
@@ -69,7 +70,11 @@ export class AuthController {
       httpOnly: true,
     });
 
-    return { loginType: 'Google', username: payload.username };
+    return {
+      loginType: 'Google',
+      email: payload.email,
+      username: payload.username,
+    };
   }
 
   @Post('logout')

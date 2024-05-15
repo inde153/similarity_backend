@@ -1,8 +1,8 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne } from 'typeorm';
 import { IsBoolean, IsEmail, IsNumber, IsString } from 'class-validator';
-import { User } from 'src/users/entities/user.entity';
-import { DailyWord } from 'src/words/entities/daily-word.entity';
+import { User } from './user.entity';
+import { DailyWord } from './daily-word.entity';
 
 @Entity()
 export class Guees extends CoreEntity {

@@ -1,7 +1,7 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CONFIG_OPTIONS } from 'src/common/common.constants';
-import { Word } from 'src/words/entities/word.entity';
+import { Word } from 'src/entities/word.entity';
 import { OpenaiModuleOptions } from './interfaces';
 import { OpenaiService } from './openai.service';
 

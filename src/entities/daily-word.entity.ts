@@ -8,8 +8,8 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { IsNumber } from 'class-validator';
-import { Guees } from 'src/records/entities/guees.entity';
 import { Word } from './word.entity';
+import { Guees } from './guees.entity';
 
 @Entity()
 export class DailyWord extends CoreEntity {
@@ -18,7 +18,7 @@ export class DailyWord extends CoreEntity {
   wordId: number;
 
   @OneToMany(() => Guees, (guees) => guees.user)
-  guees: Guees;
+  guees: Guees[];
 
   @ManyToOne(() => Word, (word) => word.id, {
     eager: true,

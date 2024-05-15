@@ -2,7 +2,6 @@ import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Payload } from 'src/common/interfaces';
 import { JwtService } from 'src/jwt/jwt.service';
-import { UserLoginType } from 'src/users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { LoginOutputDTO } from './dots/login.dto';
 import {
@@ -12,6 +11,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { RefreshOutputDTO } from './dots/refresh.dto';
+import { UserLoginType } from 'src/entities/user.entity';
 
 @Controller('v1/auth')
 @ApiTags('Auth API')

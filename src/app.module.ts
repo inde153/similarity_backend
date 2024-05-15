@@ -3,18 +3,19 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
-import { User } from './users/entities/user.entity';
 import { WordsModule } from './words/word.module';
-import { Word } from './words/entities/word.entity';
-import { DailyWord } from './words/entities/daily-word.entity';
 import { RecordsModule } from './records/record.module';
-import { Guees } from './records/entities/guees.entity';
-import { ScoreInfo } from './records/entities/score-info.entity';
-import { Category } from './words/entities/category.entity';
 import { ChatModule } from './chat/chat.module';
 import { AuthModule } from './auth/auth.module';
 import { OpenaiModule } from './openai/openai.module';
 import { JwtModule } from './jwt/jwt.module';
+
+import { User } from './entities/user.entity';
+import { Guees } from './entities/guees.entity';
+import { Category } from './entities/category.entity';
+import { DailyWord } from './entities/daily-word.entity';
+import { Word } from './entities/word.entity';
+import { ScoreInfo } from './entities/score-info.entity';
 
 @Module({
   imports: [

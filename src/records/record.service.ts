@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DailyWord } from 'src/entities/daily-word.entity';
+import { Word } from 'src/entities/word.entity';
 import { OpenaiService } from 'src/openai/openai.service';
-import { Word } from 'src/words/entities/word.entity';
 import { Repository } from 'typeorm';
 import { WordInputDTO } from './dtos/get-guess.dto';
-import { DailyWord } from 'src/words/entities/daily-word.entity';
 
 @Injectable()
 export class RecordService {
@@ -17,9 +17,14 @@ export class RecordService {
   ) {}
 
   async getEmbedding(wordInputDTO: WordInputDTO) {
-    let { id, embedding } = await this.wordRepository.findOne({
-      where: { name: wordInputDTO.name },
-    });
+    let { id, embedding } =
+      (await this.wordRepository.findOne({
+        where: { name: wordInputDTO.name },
+      })) ?? {};
+
+    if (!id) {
+      throw new HttpException({ message: '없는 단어' }, HttpStatus.BAD_REQUEST);
+    }
 
     // 특정 유저의 count를 1 증가시킵니다.
     // await this.gueesRepository

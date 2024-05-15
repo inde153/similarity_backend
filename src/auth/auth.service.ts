@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Profile } from 'passport-google-oauth20';
-import { User, UserLoginType } from 'src/users/entities/user.entity';
+import { User, UserLoginType } from 'src/entities/user.entity';
+
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()

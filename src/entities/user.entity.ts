@@ -1,7 +1,7 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { IsEmail, IsNumber, IsString } from 'class-validator';
-import { Guees } from 'src/records/entities/guees.entity';
+import { Guees } from './guees.entity';
 
 export enum UserLoginType {
   Guest = 'Guest',
@@ -19,7 +19,7 @@ export class User extends CoreEntity {
   @IsEmail()
   email: string;
 
-  @Column({ default: 'GUEST' })
+  @Column({})
   @IsString()
   loginType: UserLoginType;
 

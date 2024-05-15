@@ -2,10 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import OpenAI from 'openai';
 import { CONFIG_OPTIONS } from 'src/common/common.constants';
-import { Word } from 'src/words/entities/word.entity';
 import { Repository } from 'typeorm';
 import { OpenaiModuleOptions } from './interfaces';
 import * as pgvector from 'pgvector/pg';
+import { Word } from 'src/entities/word.entity';
 
 @Injectable()
 export class OpenaiService {
@@ -20,7 +20,7 @@ export class OpenaiService {
     });
   }
 
-  async getEmbedding(id: number, word: string): Promise<any> {
+  async getEmbedding(id: number, word: string): Promise<string> {
     const embedding = await this.openai.embeddings.create({
       model: 'text-embedding-3-small',
       input: `${word}`,
@@ -30,5 +30,7 @@ export class OpenaiService {
     await this.wordRepository.update(id, {
       embedding: pgvector.toSql(embedding.data[0].embedding),
     });
+
+    return pgvector.toSql(embedding.data[0].embedding);
   }
 }

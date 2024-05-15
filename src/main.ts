@@ -4,6 +4,7 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { APIInterceptor } from './common/interceptors/api.interceptor';
 import { HttpExceptionFilter } from './common/exception/exception.filter';
 import * as cookieParser from 'cookie-parser';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +17,15 @@ async function bootstrap() {
     maxAge: 81600,
   };
   app.enableCors(corsOptions);
+
+  const config = new DocumentBuilder()
+    .setTitle('Similarity API')
+    .setDescription('The Similarity API description')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   app.use(cookieParser());
   app.useGlobalInterceptors(new APIInterceptor());

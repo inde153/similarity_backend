@@ -1,17 +1,22 @@
 import { CoreOutput } from 'src/common/dtos/output.dto';
-import { IsNotEmpty, IsString } from 'class-validator';
-import { Word } from 'src/words/entities/word.entity';
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class GetWordInput {
+export class WordInputDTO {
   @IsNotEmpty()
   @IsString()
   name: string;
 
-  @IsNotEmpty()
   @IsString()
   categoryID: number;
 }
 
-export class GetWordOutput {
+export class WordOutputDTO {
+  @IsNumber()
+  @ApiProperty({ description: '유사도 수치' })
   similarity: number;
+
+  @IsBoolean()
+  @ApiProperty({ description: '해결 여부' })
+  isSolved?: boolean;
 }

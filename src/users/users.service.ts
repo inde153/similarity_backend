@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Payload } from 'src/common/interfaces';
 import { Repository } from 'typeorm';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateProfileInputDTO } from './dto/update-user.dto';
 import { User, UserLoginType } from './entities/user.entity';
 
 @Injectable()
@@ -29,11 +29,12 @@ export class UsersService {
     return this.userRepository.findOne({ where: { id } });
   }
 
-  async setUserProfile(updateUserDto: UpdateUserDto, user: Payload) {
+  async setUserProfile(
+    updateProfileInputDTO: UpdateProfileInputDTO,
+    user: Payload,
+  ): Promise<void> {
     await this.userRepository.update(user.id, {
-      username: updateUserDto.username,
+      username: updateProfileInputDTO.username,
     });
-
-    return {};
   }
 }

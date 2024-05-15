@@ -9,8 +9,9 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
-import { ChatOutputDTO, SetInitDTO } from './dtos/chat.dto';
+import { ChatInputDTO, ChatOutputDTO } from './dtos/chat.dto';
 import * as moment from 'moment';
+import { SetInitInputDTO, SetInitOutputDTO } from './dtos/setInit.dto';
 
 @WebSocketGateway({
   namespace: 'chat',
@@ -37,8 +38,11 @@ export class ChatGateway
   }
 
   @SubscribeMessage('setInit')
-  handleSetInit(client: Socket, payload: { username: string }): SetInitDTO {
-    let username = payload.username;
+  handleSetInit(
+    client: Socket,
+    setInitInputDTO: SetInitInputDTO,
+  ): SetInitOutputDTO {
+    let username = setInitInputDTO.username;
     client.data.username = username;
 
     return {
@@ -51,20 +55,20 @@ export class ChatGateway
   }
 
   @SubscribeMessage('getOldComments')
-  getOldComments(client: Socket, test: string): ChatOutputDTO[] {
+  getOldComments(client: Socket): ChatOutputDTO[] {
     return this.comments.slice(-50);
   }
 
   @SubscribeMessage('sendMessage')
-  handleMessage(client: Socket, data): void {
+  handleMessage(client: Socket, chatInputDTO: ChatInputDTO): void {
     const timestamp = moment(new Date()).format('HH:mm:ss');
-    const username = data.username;
+    const username = chatInputDTO.username;
 
     const messageData = {
       id: client.id, // or generate a unique ID for the message
-      email: data.email,
+      email: chatInputDTO.email,
       username: username,
-      message: data.message,
+      message: chatInputDTO.message,
       date: timestamp,
     };
 

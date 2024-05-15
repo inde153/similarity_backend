@@ -1,17 +1,30 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsNumber, IsObject, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class SetInitDTO {
+export class ChatInputDTO {
+  @IsString()
   username: string;
-  room: {
-    roomId: string;
-    roomName: string;
-  };
+
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  message: string;
 }
 
 export class ChatOutputDTO {
-  id: string;
+  @IsString()
+  id: number;
+
+  @IsString()
   username: string;
+
+  @IsEmail()
   email: string;
+
+  @IsString()
   message: string;
+
+  @IsString()
   date: string;
 }

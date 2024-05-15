@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { OpenaiService } from 'src/openai/openai.service';
 import { Word } from 'src/words/entities/word.entity';
 import { Repository } from 'typeorm';
-import { GetWordInput } from './dtos/get-guess.dto';
+import { WordInputDTO } from './dtos/get-guess.dto';
 import { DailyWord } from 'src/words/entities/daily-word.entity';
 
 @Injectable()
@@ -16,9 +16,9 @@ export class RecordService {
     private readonly openaiService: OpenaiService,
   ) {}
 
-  async getEmbedding(body: GetWordInput) {
+  async getEmbedding(wordInputDTO: WordInputDTO) {
     let { id, embedding } = await this.wordRepository.findOne({
-      where: { name: body.name },
+      where: { name: wordInputDTO.name },
     });
 
     // 특정 유저의 count를 1 증가시킵니다.
@@ -30,7 +30,7 @@ export class RecordService {
     // .execute();
 
     if (!embedding) {
-      embedding = await this.openaiService.getEmbedding(id, body.name);
+      embedding = await this.openaiService.getEmbedding(id, wordInputDTO.name);
     }
 
     const { embedding: dailyWord } = await this.wordRepository.findOne({

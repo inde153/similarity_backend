@@ -22,13 +22,9 @@ export class RecordService {
       where: { name: wordInputDTO.name },
     });
 
-    console.log(word);
-
     if (!word) {
       word = await this.embeddingService.getWordEmbedding(wordInputDTO.name);
     }
-
-    console.log(word);
 
     const dailyWord = await this.wordRepository.findOne({
       where: { id: 1 },

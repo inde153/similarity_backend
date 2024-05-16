@@ -5,12 +5,14 @@ import { Word } from 'src/entities/word.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as pgvector from 'pgvector/pg';
+import { OpenaiService } from 'src/openai/openai.service';
 
 @Injectable()
 export class EmbeddingService {
   constructor(
     @InjectRepository(Word)
     private readonly wordRepository: Repository<Word>,
+    private readonly openaiService: OpenaiService,
   ) {}
 
   async getWordEmbedding(targetWord: string): Promise<Word> {
@@ -54,11 +56,7 @@ export class EmbeddingService {
               ),
             );
           } else {
-            console.log(embedding);
-            throw new HttpException(
-              { message: '없는 단어' },
-              HttpStatus.BAD_REQUEST,
-            );
+            return this.openaiService.getEmbedding(targetWord);
           }
         });
     });

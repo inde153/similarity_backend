@@ -27,14 +27,14 @@ export class OpenaiService {
       encoding_format: 'float',
     });
 
-    if (!embedding) {
+    if (!embedding.data[0].embedding) {
       throw new HttpException({ message: '없는 단어' }, HttpStatus.BAD_REQUEST);
     }
 
     return this.wordRepository.save(
       this.wordRepository.create({
         name: targetWord,
-        embedding: pgvector.toSql(embedding),
+        embedding: pgvector.toSql(embedding.data[0].embedding),
       }),
     );
   }

@@ -7,10 +7,6 @@ export class WordInputDTO {
   @IsString()
   @ApiProperty({ description: '추측 단어' })
   name: string;
-
-  @IsString()
-  @ApiProperty({ description: '카테고리 번호' })
-  categoryID: number;
 }
 
 export class WordOutputDTO {

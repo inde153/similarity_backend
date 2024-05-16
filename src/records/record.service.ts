@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EmbeddingService } from 'src/embedding/embedding.service';
 import { DailyWord } from 'src/entities/daily-word.entity';
 import { Word } from 'src/entities/word.entity';
 import { OpenaiService } from 'src/openai/openai.service';
@@ -13,37 +14,30 @@ export class RecordService {
     private readonly wordRepository: Repository<Word>,
     @InjectRepository(DailyWord)
     private readonly dailyWordRepository: Repository<DailyWord>,
-    private readonly openaiService: OpenaiService,
+    private readonly embeddingService: EmbeddingService,
   ) {}
 
   async getEmbedding(wordInputDTO: WordInputDTO) {
-    let { id, embedding } =
-      (await this.wordRepository.findOne({
-        where: { name: wordInputDTO.name },
-      })) ?? {};
+    let word = await this.wordRepository.findOne({
+      where: { name: wordInputDTO.name },
+    });
 
-    if (!id) {
-      throw new HttpException({ message: '없는 단어' }, HttpStatus.BAD_REQUEST);
+    console.log(word);
+
+    if (!word) {
+      word = await this.embeddingService.getWordEmbedding(wordInputDTO.name);
     }
 
-    // 특정 유저의 count를 1 증가시킵니다.
-    // await this.gueesRepository
-    // .createQueryBuilder()
-    // .update(Geees)
-    // .set({ count: () => "count + 1" })
-    // .where("userId = :userId", { userId })
-    // .execute();
+    console.log(word);
 
-    if (!embedding) {
-      embedding = await this.openaiService.getEmbedding(id, wordInputDTO.name);
-    }
-
-    const { embedding: dailyWord } = await this.wordRepository.findOne({
-      where: { id: 10 },
+    const dailyWord = await this.wordRepository.findOne({
+      where: { id: 1 },
     });
 
     const similarity = Number(
-      (this.cosineSimilarity(embedding, dailyWord) * 100).toFixed(2),
+      (
+        this.cosineSimilarity(word.embedding, dailyWord.embedding) * 100
+      ).toFixed(2),
     );
 
     return { similarity };

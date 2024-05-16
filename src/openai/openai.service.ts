@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import OpenAI from 'openai';
 import { CONFIG_OPTIONS } from 'src/common/common.constants';
@@ -20,17 +20,22 @@ export class OpenaiService {
     });
   }
 
-  async getEmbedding(id: number, word: string): Promise<string> {
+  async getEmbedding(targetWord: string): Promise<Word> {
     const embedding = await this.openai.embeddings.create({
       model: 'text-embedding-3-small',
-      input: `${word}`,
+      input: `${targetWord}`,
       encoding_format: 'float',
     });
 
-    await this.wordRepository.update(id, {
-      embedding: pgvector.toSql(embedding.data[0].embedding),
-    });
+    if (!embedding) {
+      throw new HttpException({ message: '없는 단어' }, HttpStatus.BAD_REQUEST);
+    }
 
-    return pgvector.toSql(embedding.data[0].embedding);
+    return this.wordRepository.save(
+      this.wordRepository.create({
+        name: targetWord,
+        embedding: pgvector.toSql(embedding),
+      }),
+    );
   }
 }

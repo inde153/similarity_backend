@@ -6,10 +6,11 @@ import { Record } from '../entities/record.entity';
 import { ScoreInfo } from 'src/entities/score-info.entity';
 import { Word } from 'src/entities/word.entity';
 import { DailyWord } from 'src/entities/daily-word.entity';
+import { EmbeddingService } from 'src/embedding/embedding.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Record, ScoreInfo, Word, DailyWord])],
   controllers: [RecordController],
-  providers: [RecordService],
+  providers: [RecordService, EmbeddingService],
 })
 export class RecordsModule {}

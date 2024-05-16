@@ -15,6 +15,7 @@ import { Record } from './entities/record.entity';
 import { DailyWord } from './entities/daily-word.entity';
 import { Word } from './entities/word.entity';
 import { ScoreInfo } from './entities/score-info.entity';
+import { EmbeddingModule } from './embedding/embedding.module';
 
 @Module({
   imports: [
@@ -72,6 +73,7 @@ import { ScoreInfo } from './entities/score-info.entity';
     RecordsModule,
     ChatModule,
     AuthModule,
+    EmbeddingModule,
   ],
   controllers: [],
   providers: [],

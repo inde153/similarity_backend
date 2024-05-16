@@ -1,15 +1,8 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
-import {
-  BeforeInsert,
-  BeforeUpdate,
-  Column,
-  Entity,
-  OneToMany,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, OneToMany, ManyToOne } from 'typeorm';
 import { IsNumber } from 'class-validator';
 import { Word } from './word.entity';
-import { Guees } from './guees.entity';
+import { Record } from './record.entity';
 
 @Entity()
 export class DailyWord extends CoreEntity {
@@ -17,8 +10,8 @@ export class DailyWord extends CoreEntity {
   @IsNumber()
   wordId: number;
 
-  @OneToMany(() => Guees, (guees) => guees.user)
-  guees: Guees[];
+  @OneToMany(() => Record, (record) => record.user)
+  record: Record[];
 
   @ManyToOne(() => Word, (word) => word.id, {
     eager: true,

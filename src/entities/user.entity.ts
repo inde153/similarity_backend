@@ -1,7 +1,7 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { IsEmail, IsNumber, IsString } from 'class-validator';
-import { Guees } from './guees.entity';
+import { Record } from './record.entity';
 
 export enum UserLoginType {
   Guest = 'Guest',
@@ -27,6 +27,6 @@ export class User extends CoreEntity {
   @IsNumber()
   score: number;
 
-  @OneToMany(() => Guees, (guees) => guees.user)
-  guees: Guees[];
+  @OneToMany(() => Record, (record) => record.user)
+  record: Record[];
 }

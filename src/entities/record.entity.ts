@@ -5,7 +5,7 @@ import { User } from './user.entity';
 import { DailyWord } from './daily-word.entity';
 
 @Entity()
-export class Guees extends CoreEntity {
+export class Record extends CoreEntity {
   @Column()
   @IsNumber()
   tryCount: number;

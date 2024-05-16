@@ -11,8 +11,7 @@ import { OpenaiModule } from './openai/openai.module';
 import { JwtModule } from './jwt/jwt.module';
 
 import { User } from './entities/user.entity';
-import { Guees } from './entities/guees.entity';
-import { Category } from './entities/category.entity';
+import { Record } from './entities/record.entity';
 import { DailyWord } from './entities/daily-word.entity';
 import { Word } from './entities/word.entity';
 import { ScoreInfo } from './entities/score-info.entity';
@@ -52,7 +51,7 @@ import { ScoreInfo } from './entities/score-info.entity';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [User, Word, DailyWord, Guees, ScoreInfo, Category],
+      entities: [User, Word, DailyWord, Record, ScoreInfo],
       extra: {
         postgres: {
           extensions: ['pgvector'],

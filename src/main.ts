@@ -28,7 +28,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  app.setGlobalPrefix('v1');
+  app.setGlobalPrefix('v1/api');
   //class-transform 사용
   // app.useGlobalPipes(
   //   new ValidationPipe({

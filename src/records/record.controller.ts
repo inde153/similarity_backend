@@ -5,7 +5,7 @@ import { Role } from 'src/common/decorators/role.decorator';
 import { WordInputDTO, WordOutputDTO } from './dtos/get-guess.dto';
 import { RecordService } from './record.service';
 
-@Controller('v1/record')
+@Controller('record')
 @ApiTags('Record API')
 export class RecordController {
   constructor(private readonly recordService: RecordService) {}

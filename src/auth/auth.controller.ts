@@ -13,7 +13,7 @@ import {
 import { RefreshOutputDTO } from './dots/refresh.dto';
 import { UserLoginType } from 'src/entities/user.entity';
 
-@Controller('v1/auth')
+@Controller('auth')
 @ApiTags('Auth API')
 export class AuthController {
   constructor(

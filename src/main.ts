@@ -5,6 +5,7 @@ import { APIInterceptor } from './common/interceptors/api.interceptor';
 import { HttpExceptionFilter } from './common/exception/exception.filter';
 import * as cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -27,9 +28,21 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  app.setGlobalPrefix('v1');
+  //class-transform 사용
+  // app.useGlobalPipes(
+  //   new ValidationPipe({
+  //     transform: true, // Request로 넘어온 데이터 형변환
+  //     whitelist: true, // Request에서 Validation 데코레이터가 붙어있지 않은 속성 제거
+  //     forbidNonWhitelisted: true, // Whitelist 조건에 맞지 않는 속성이 있으면 400 에러 (Bad Request)
+  //   }),
+  // );
   app.use(cookieParser());
   app.useGlobalInterceptors(new APIInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  //쿠키 시크릿 설정
+  // app.use(cookieParser(process.env.COOKIE_SECRET));
 
   await app.listen(PORT);
 }

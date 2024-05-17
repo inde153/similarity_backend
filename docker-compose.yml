@@ -36,4 +36,4 @@ services:
     environment:
       - NODE_ENV=dev
     env_file:
-      - ./.env
+      - ./.dev.env

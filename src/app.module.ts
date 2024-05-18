@@ -33,6 +33,7 @@ import { EmbeddingModule } from './embedding/embedding.module';
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
+        DB_LOGGING: Joi.boolean().required(),
         OPENAI_API_KEY: Joi.string().required(),
         JWT_SECRET_ACCESS_KEY: Joi.string().required(),
         JWT_SECRET_REFRESH_KEY: Joi.string().required(),
@@ -49,9 +50,8 @@ import { EmbeddingModule } from './embedding/embedding.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      synchronize: process.env.NODE_ENV !== 'prod',
-      logging:
-        process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+      logging: process.env.DB_LOGGING === 'true' ? true : false,
+      synchronize: process.env.DB_SYNCHRONIZE === 'true' ? true : false,
       entities: [User, Word, DailyWord, Record, ScoreInfo],
       extra: {
         postgres: {

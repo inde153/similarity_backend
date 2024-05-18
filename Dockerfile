@@ -2,13 +2,15 @@ FROM node:18.17.1
 
 WORKDIR /usr/src/app
 
-
+RUN apt-get update && apt-get install -y wget gzip
 
 COPY package*.json ./
 
 RUN npm ci
 
 COPY . .
+
+EXPOSE 8080
 
 RUN mkdir -p data && \
     cd data && \

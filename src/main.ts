@@ -11,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const PORT = 8080;
   const corsOptions: CorsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.CLINET_URI,
     methods: 'GET,POST,PUT',
     allowedHeaders: 'Origin,Content-Type,Authorization,Accept',
     credentials: true,

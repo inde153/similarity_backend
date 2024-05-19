@@ -1,8 +1,13 @@
-FROM node:18.17.1
+FROM node:18.17.1-alpine AS build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-RUN apt-get update && apt-get install -y wget gzip
+RUN apk update && apk add --no-cache wget gzip
+
+RUN mkdir -p data && \
+    cd data && \
+    wget https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.ko.300.vec.gz && \
+    gzip -d cc.ko.300.vec.gz
 
 COPY package*.json ./
 
@@ -10,14 +15,20 @@ RUN npm ci
 
 COPY . .
 
-EXPOSE 8080
-
-RUN mkdir -p data && \
-    cd data && \
-    wget https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.ko.300.vec.gz && \
-    gzip -d cc.ko.300.vec.gz
-
 RUN npm run build
 
-# Start the server using the production build
+
+FROM node:18.17.1-alpine
+
+WORKDIR /app
+
+ARG NODE_ENV=dev
+ENV NODE_ENV=${NODE_ENV}
+
+COPY --from=build /app/dist ./dist
+COPY package*.json ./
+RUN npm ci
+
+EXPOSE 8080
+
 CMD [ "node", "dist/main.js" ]

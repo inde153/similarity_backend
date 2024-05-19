@@ -24,11 +24,12 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
+    volume: /home/ubuntu/data:/app/data
     ports:
       - '80:8080'
     networks:
       - server-connection
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=prod
     env_file:
-      - ./.dev.env
+      - ./.env

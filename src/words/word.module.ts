@@ -9,5 +9,6 @@ import { Word } from 'src/entities/word.entity';
   imports: [TypeOrmModule.forFeature([DailyWord, Word])],
   controllers: [WordController],
   providers: [WordService],
+  exports: [WordService],
 })
 export class WordsModule {}

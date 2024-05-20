@@ -1,9 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { InternalServerException } from 'src/common/exception/service.exception';
 import { EmbeddingService } from 'src/embedding/embedding.service';
-import { DailyWord } from 'src/entities/daily-word.entity';
 import { Word } from 'src/entities/word.entity';
-import { OpenaiService } from 'src/openai/openai.service';
+import { WordService } from 'src/words/word.service';
 import { Repository } from 'typeorm';
 import { WordInputDTO } from './dtos/get-guess.dto';
 
@@ -12,31 +12,32 @@ export class RecordService {
   constructor(
     @InjectRepository(Word)
     private readonly wordRepository: Repository<Word>,
-    @InjectRepository(DailyWord)
-    private readonly dailyWordRepository: Repository<DailyWord>,
+    private readonly wordService: WordService,
     private readonly embeddingService: EmbeddingService,
   ) {}
 
   async getEmbedding(wordInputDTO: WordInputDTO) {
-    let word = await this.wordRepository.findOne({
-      where: { name: wordInputDTO.name },
-    });
+    try {
+      let word = await this.wordRepository.findOne({
+        where: { name: wordInputDTO.name },
+      });
 
-    if (!word) {
-      word = await this.embeddingService.getWordEmbedding(wordInputDTO.name);
+      if (!word) {
+        word = await this.embeddingService.getWordEmbedding(wordInputDTO.name);
+      }
+
+      const [dailyWord] = await this.wordService.getDailyWord();
+
+      const similarity = Number(
+        (
+          this.cosineSimilarity(word.embedding, dailyWord.word.embedding) * 100
+        ).toFixed(2),
+      );
+
+      return { similarity };
+    } catch (e) {
+      throw InternalServerException('Internal Server Error');
     }
-
-    const dailyWord = await this.wordRepository.findOne({
-      where: { id: 1 },
-    });
-
-    const similarity = Number(
-      (
-        this.cosineSimilarity(word.embedding, dailyWord.embedding) * 100
-      ).toFixed(2),
-    );
-
-    return { similarity };
   }
 
   private cosineSimilarity(embedding: string, dailyWord: string): number {

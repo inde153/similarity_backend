@@ -5,11 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Record } from '../entities/record.entity';
 import { ScoreInfo } from 'src/entities/score-info.entity';
 import { Word } from 'src/entities/word.entity';
-import { DailyWord } from 'src/entities/daily-word.entity';
 import { EmbeddingService } from 'src/embedding/embedding.service';
+import { WordsModule } from 'src/words/word.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Record, ScoreInfo, Word, DailyWord])],
+  imports: [TypeOrmModule.forFeature([Record, ScoreInfo, Word]), WordsModule],
   controllers: [RecordController],
   providers: [RecordService, EmbeddingService],
 })

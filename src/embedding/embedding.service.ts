@@ -12,7 +12,6 @@ export class EmbeddingService {
   constructor(
     @InjectRepository(Word)
     private readonly wordRepository: Repository<Word>,
-    private readonly openaiService: OpenaiService,
   ) {}
 
   async getWordEmbedding(targetWord: string): Promise<Word> {
@@ -42,8 +41,7 @@ export class EmbeddingService {
           }
         })
         .on('error', (err) => {
-          console.log(err);
-          throw new HttpException({}, HttpStatus.INTERNAL_SERVER_ERROR);
+          reject(err);
         })
         .on('close', async () => {
           if (embedding !== null) {
@@ -55,8 +53,6 @@ export class EmbeddingService {
                 }),
               ),
             );
-          } else {
-            return this.openaiService.getEmbedding(targetWord);
           }
         });
     });

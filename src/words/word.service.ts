@@ -10,9 +10,7 @@ export class WordService {
     private readonly dailyWordRepository: Repository<DailyWord>,
   ) {}
 
-  async getDailyWord() {
-    return this.dailyWordRepository.findOne({
-      where: { id: 1 },
-    });
+  async getDailyWord(): Promise<DailyWord[]> {
+    return this.dailyWordRepository.find();
   }
 }

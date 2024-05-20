@@ -23,9 +23,7 @@ export class APIInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map(
         (data): CoreOutput => ({
-          success: true,
           message: '',
-          errorCode: 0,
           data,
         }),
       ),

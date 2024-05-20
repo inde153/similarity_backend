@@ -9,7 +9,6 @@ import { ChatModule } from './chat/chat.module';
 import { AuthModule } from './auth/auth.module';
 import { OpenaiModule } from './openai/openai.module';
 import { JwtModule } from './jwt/jwt.module';
-
 import { User } from './entities/user.entity';
 import { Record } from './entities/record.entity';
 import { DailyWord } from './entities/daily-word.entity';

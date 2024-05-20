@@ -14,7 +14,6 @@ export class UsersController {
 
   @Role(['Google'])
   @UseGuards(RoleGuard)
-  @UseGuards(AuthGuard('access'))
   @ApiOperation({
     summary: '유저 정보 API',
     description: '유저의 정보를 가져온다.',
@@ -25,12 +24,12 @@ export class UsersController {
   })
   @Get('/profile')
   async getUserInfo(@Req() req): Promise<ProfileOutputDto> {
-    return this.userService.getUserInfo(req.user.id);
+    const { user } = req;
+    return this.userService.getUserInfo(user.id);
   }
 
-  @Role(['Any'])
+  @Role(['Google'])
   @UseGuards(RoleGuard)
-  @UseGuards(AuthGuard('access'))
   @ApiOperation({
     summary: '유저 정보 수정 API',
     description: '유저의 정보를 수정한다.',
@@ -44,7 +43,8 @@ export class UsersController {
     @Req() req,
     @Body() updateProfileInputDto: UpdateProfileInputDTO,
   ): Promise<ProfileOutputDto> {
-    await this.userService.setUserProfile(updateProfileInputDto, req.user);
+    const { user } = req;
+    await this.userService.setUserProfile(updateProfileInputDto, user);
     return this.getUserInfo(req);
   }
 }

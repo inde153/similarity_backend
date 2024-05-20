@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InternalServerException } from 'src/common/exception/service.exception';
-import { EmbeddingService } from 'src/embedding/embedding.service';
-import { Word } from 'src/entities/word.entity';
+import { Payload } from 'src/common/interfaces';
+import { Record } from 'src/entities/record.entity';
 import { WordService } from 'src/words/word.service';
 import { Repository } from 'typeorm';
 import { WordInputDTO } from './dtos/get-guess.dto';
@@ -10,34 +9,32 @@ import { WordInputDTO } from './dtos/get-guess.dto';
 @Injectable()
 export class RecordService {
   constructor(
-    @InjectRepository(Word)
-    private readonly wordRepository: Repository<Word>,
     private readonly wordService: WordService,
-    private readonly embeddingService: EmbeddingService,
+    @InjectRepository(Record)
+    private readonly recordRepository: Repository<Record>,
   ) {}
 
-  async getEmbedding(wordInputDTO: WordInputDTO) {
-    try {
-      let word = await this.wordRepository.findOne({
-        where: { name: wordInputDTO.name },
-      });
+  async getEmbedding(user: Payload, wordInputDTO: WordInputDTO) {
+    let word = await this.wordService.getWord(wordInputDTO.name);
+    let isSolved = false;
 
-      if (!word) {
-        word = await this.embeddingService.getWordEmbedding(wordInputDTO.name);
-      }
+    const [dailyWord] = await this.wordService.getDailyWord();
 
-      const [dailyWord] = await this.wordService.getDailyWord();
+    const similarity = Number(
+      (
+        this.cosineSimilarity(word.embedding, dailyWord.word.embedding) * 100
+      ).toFixed(2),
+    );
 
-      const similarity = Number(
-        (
-          this.cosineSimilarity(word.embedding, dailyWord.word.embedding) * 100
-        ).toFixed(2),
-      );
-
-      return { similarity };
-    } catch (e) {
-      throw InternalServerException('Internal Server Error');
+    if (~~similarity === 100) {
+      isSolved = true;
     }
+
+    if (user?.id) {
+      // await recordRepository.save;
+    }
+
+    return { similarity, isSolved };
   }
 
   private cosineSimilarity(embedding: string, dailyWord: string): number {

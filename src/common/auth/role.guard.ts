@@ -17,18 +17,6 @@ export class RoleGuard implements CanActivate {
     );
 
     if (!roles || roles.includes('Any')) {
-      const request = context.switchToHttp().getRequest();
-      const token = request.cookies.access;
-
-      if (!token) {
-        request.user = null;
-      } else {
-        const decoded = this.jwtService.verifyAccessToken(token);
-        if (typeof decoded === 'object' && decoded.hasOwnProperty('id')) {
-          request.user = decoded;
-        }
-      }
-
       return true;
     }
 

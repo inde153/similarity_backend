@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,6 +20,7 @@ import { DailyWord } from './entities/daily-word.entity';
 import { Word } from './entities/word.entity';
 import { ScoreInfo } from './entities/score-info.entity';
 import { EmbeddingModule } from './embedding/embedding.module';
+import { JwtMiddleware } from './common/middleware/jwt.middleware';
 
 @Module({
   imports: [
@@ -77,4 +83,12 @@ import { EmbeddingModule } from './embedding/embedding.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  // 위에서 작성한 미들웨어를 consumer에 적용 시킨다.
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(JwtMiddleware).forRoutes({
+      path: '*', // 특정 path 혹은 method에 대해서만 적용 시킬수도 있다.
+      method: RequestMethod.ALL,
+    });
+  }
+}

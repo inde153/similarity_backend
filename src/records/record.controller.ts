@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthUser } from 'src/common/auth/auth.user.decorator';
 import { RoleGuard } from 'src/common/auth/role.guard';
 import { Role } from 'src/common/decorators/role.decorator';
-import { Payload } from 'src/common/interfaces';
+import { User } from 'src/entities/user.entity';
 import { WordInputDTO, WordOutputDTO } from './dtos/get-guess.dto';
 import { RecordService } from './record.service';
 
@@ -24,10 +24,9 @@ export class RecordController {
   })
   @Post()
   async getEmbedding(
-    @Req() req,
+    @AuthUser() authUser: User,
     @Body() wordInputDTO: WordInputDTO,
   ): Promise<WordOutputDTO> {
-    const { user } = req;
-    return this.recordService.getEmbedding(user, wordInputDTO);
+    return this.recordService.getEmbedding(authUser, wordInputDTO);
   }
 }

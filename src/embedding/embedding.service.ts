@@ -21,7 +21,7 @@ export class EmbeddingService {
 
       const modelPath = process.env.MODEL_PATH;
       const stream = fs.createReadStream(join(modelPath), {
-        highWaterMark: 1024,
+        highWaterMark: 2097152,
       });
 
       stream

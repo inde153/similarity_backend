@@ -23,10 +23,6 @@ export class User extends CoreEntity {
   @IsString()
   loginType: UserLoginType;
 
-  @Column({ default: 0 })
-  @IsNumber()
-  score: number;
-
   @OneToMany(() => Record, (record) => record.user)
   record: Record[];
 }

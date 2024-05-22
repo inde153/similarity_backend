@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { Role } from 'src/common/decorators/role.decorator';
 import { RoleGuard } from 'src/common/auth/role.guard';
 import { UpdateProfileInputDTO } from './dto/update-user.dto';

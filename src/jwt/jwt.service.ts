@@ -1,9 +1,8 @@
 import {
   ForbiddenException,
-  HttpException,
-  HttpStatus,
   Inject,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { CONFIG_OPTIONS } from 'src/common/common.constants';
@@ -32,12 +31,14 @@ export class JwtService {
     try {
       return jwt.verify(token, this.options.accessKey);
     } catch (e) {
-      throw new ForbiddenException(e.message);
+      throw new UnauthorizedException(e.message);
     }
   }
 
-  verifyRefreshToken(token: string): any {
+  verifyRefreshToken(token: string, res): any {
     try {
+      res.clearCookie('refresh');
+      res.clearCookie('access');
       return jwt.verify(token, this.options.refreshKey);
     } catch (e) {
       throw new ForbiddenException(e.message);

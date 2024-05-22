@@ -86,9 +86,9 @@ import { JwtMiddleware } from './common/middleware/jwt.middleware';
 export class AppModule implements NestModule {
   // 위에서 작성한 미들웨어를 consumer에 적용 시킨다.
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes({
-      path: '*', // 특정 path 혹은 method에 대해서만 적용 시킬수도 있다.
-      method: RequestMethod.ALL,
-    });
+    consumer
+      .apply(JwtMiddleware)
+      .exclude({ path: 'auth/refresh', method: RequestMethod.ALL })
+      .forRoutes('*');
   }
 }

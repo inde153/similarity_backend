@@ -1,4 +1,10 @@
-import { NOT_FOUND, ErrorCode, INTERNAL_SERVER, FORBIDDEN } from '../exception';
+import {
+  NOT_FOUND,
+  ErrorCode,
+  INTERNAL_SERVER,
+  FORBIDDEN,
+  UNAUTHORIZED,
+} from '../exception';
 
 export const NotFoundException = (message?: string): ServiceException => {
   return new ServiceException(NOT_FOUND, message);
@@ -10,6 +16,10 @@ export const InternalServerException = (message?: string): ServiceException => {
 
 export const ForbiddenException = (message?: string): ServiceException => {
   return new ServiceException(FORBIDDEN, message);
+};
+
+export const UnauthorizedException = (message?: string): ServiceException => {
+  return new ServiceException(UNAUTHORIZED, message);
 };
 
 export class ServiceException extends Error {

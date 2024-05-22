@@ -86,7 +86,7 @@ export class AuthController {
       username,
       email,
       loginType,
-    }))(this.jwtService.verifyRefreshToken(token));
+    }))(this.jwtService.verifyRefreshToken(token, res));
 
     const accessToken: string = this.jwtService.createAccessToken(payload)!;
     const refreshToken: string = this.jwtService.createRefreshToken(payload)!;

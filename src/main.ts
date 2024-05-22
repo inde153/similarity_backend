@@ -9,6 +9,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   const PORT = 8080;
   const corsOptions: CorsOptions = {
     origin: process.env.CLINET_URI,
@@ -39,6 +40,7 @@ async function bootstrap() {
   //쿠키 시크릿 설정
   // app.use(cookieParser(process.env.COOKIE_SECRET));
 
+  await app.init().catch((e) => console.log(e));
   await app.listen(PORT);
 }
 bootstrap();

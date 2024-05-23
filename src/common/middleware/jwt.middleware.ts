@@ -13,7 +13,6 @@ export class JwtMiddleware implements NestMiddleware {
   ) {}
   //토큰을 받기 위한 미들웨어를 구현
   async use(req: Request, res: Response, next: NextFunction) {
-    console.log(111);
     if (req.cookies.access) {
       const token = req.cookies.access;
 

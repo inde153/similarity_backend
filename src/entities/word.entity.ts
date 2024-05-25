@@ -5,7 +5,7 @@ import { DailyWord } from './daily-word.entity';
 
 @Entity()
 export class Word extends CoreEntity {
-  @Column()
+  @Column({ unique: true })
   @IsString()
   name: string;
 

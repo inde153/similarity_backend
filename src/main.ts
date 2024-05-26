@@ -6,13 +6,11 @@ import { HttpExceptionFilter } from './common/exception/exception.filter';
 import * as cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { winstonLogger } from './common/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger:
-      process.env.NODE_ENV === 'prod'
-        ? ['error', 'warn', 'log']
-        : ['error', 'warn', 'log', 'debug'],
+    logger: winstonLogger,
   });
 
   const PORT = 8080;

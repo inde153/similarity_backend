@@ -21,6 +21,7 @@ import { Word } from './entities/word.entity';
 import { ScoreInfo } from './entities/score-info.entity';
 import { EmbeddingModule } from './embedding/embedding.module';
 import { JwtMiddleware } from './common/middleware/jwt.middleware';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -85,10 +86,11 @@ import { JwtMiddleware } from './common/middleware/jwt.middleware';
 })
 export class AppModule implements NestModule {
   // 위에서 작성한 미들웨어를 consumer에 적용 시킨다.
-  configure(consumer: MiddlewareConsumer) {
+  configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(JwtMiddleware)
       .exclude({ path: 'auth/refresh', method: RequestMethod.ALL })
       .forRoutes('*');
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }

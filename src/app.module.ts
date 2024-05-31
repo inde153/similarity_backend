@@ -60,6 +60,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
       synchronize: process.env.DB_SYNCHRONIZE === 'true' ? true : false,
       entities: [User, Word, DailyWord, Record, ScoreInfo],
       extra: {
+        connectionTimeoutMillis: 10000,
         postgres: {
           extensions: ['pgvector'],
         },

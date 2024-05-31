@@ -43,7 +43,7 @@ async function bootstrap() {
   //쿠키 시크릿 설정
   // app.use(cookieParser(process.env.COOKIE_SECRET));
 
-  await app.init().catch((e) => console.log(e));
+  await app.init().catch((e) => winstonLogger.error(e));
   await app.listen(PORT);
 }
 bootstrap();

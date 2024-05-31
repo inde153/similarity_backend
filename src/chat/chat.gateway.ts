@@ -61,7 +61,9 @@ export class ChatGateway
 
   @SubscribeMessage('sendMessage')
   handleMessage(client: Socket, chatInputDTO: ChatInputDTO): void {
-    const timestamp = moment(new Date()).format('HH:mm:ss');
+    const timestamp = moment(new Date(), moment.ISO_8601).format(
+      'YYYY-MM-DD HH:mm:ss',
+    );
     const username = chatInputDTO.username;
 
     const messageData = {

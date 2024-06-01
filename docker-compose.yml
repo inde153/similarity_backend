@@ -29,7 +29,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - /home/ubuntu/data:/app/data
+      - ${DATA_PATH}:/app/data
     ports:
       - '8080:8080'
     networks:

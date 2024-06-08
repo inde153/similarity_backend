@@ -18,25 +18,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Create .dev.env file # 필요한 경우 .dev.env 파일을 생성
         run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .dev.env
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .dev.env
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .dev.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .dev.env
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .dev.env
-          echo "DB_SYNCHRONIZE=${{ secrets.DB_SYNCHRONIZE }}" >> .dev.env
-          echo "DB_LOGGING=${{ secrets.DB_LOGGING }}" >> .dev.env
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .dev.env
-          echo "KOREA_DICTIONARY=${{ secrets.KOREA_DICTIONARY }}" >> .dev.env
-          echo "JWT_SECRET_ACCESS_KEY=${{ secrets.JWT_SECRET_ACCESS_KEY }}" >> .dev.env
-          echo "JWT_SECRET_REFRESH_KEY=${{ secrets.JWT_SECRET_REFRESH_KEY }}" >> .dev.env
-          echo "JWT_SECRET_ACCESS_EXPIRATION=${{ secrets.JWT_SECRET_ACCESS_EXPIRATION }}" >> .dev.env
-          echo "JWT_SECRET_REFRESH_EXPIRATION=${{ secrets.JWT_SECRET_REFRESH_EXPIRATION }}" >> .dev.env
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .dev.env
-          echo "GOOGLE_SECRET_KEY=${{ secrets.GOOGLE_SECRET_KEY }}" >> .dev.env
-          echo "SERVER_URI=${{ secrets.SERVER_URI }}" >> .dev.env
-          echo "CLINET_URI=${{ secrets.CLINET_URI }}" >> .dev.env
-          echo "MODEL_PATH=${{ secrets.MODEL_PATH }}" >> .dev.env
-          echo "DATA_PATH=${{ secrets.DATA_PATH }}" >> .dev.env
+          echo "${{ secrets.APPLICATION  }}" >> .dev.env
       - name: Set up Docker Buildx # Docker Buildx를 설정하여 다중 플랫폼 빌드 기능을 사용
         uses: docker/setup-buildx-action@v1
       - name: Cache Docker layers
@@ -63,25 +45,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Create .dev.env file # 필요한 경우 .dev.env 파일을 생성
         run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .dev.env
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .dev.env
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .dev.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .dev.env
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .dev.env
-          echo "DB_SYNCHRONIZE=${{ secrets.DB_SYNCHRONIZE }}" >> .dev.env
-          echo "DB_LOGGING=${{ secrets.DB_LOGGING }}" >> .dev.env
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .dev.env
-          echo "KOREA_DICTIONARY=${{ secrets.KOREA_DICTIONARY }}" >> .dev.env
-          echo "JWT_SECRET_ACCESS_KEY=${{ secrets.JWT_SECRET_ACCESS_KEY }}" >> .dev.env
-          echo "JWT_SECRET_REFRESH_KEY=${{ secrets.JWT_SECRET_REFRESH_KEY }}" >> .dev.env
-          echo "JWT_SECRET_ACCESS_EXPIRATION=${{ secrets.JWT_SECRET_ACCESS_EXPIRATION }}" >> .dev.env
-          echo "JWT_SECRET_REFRESH_EXPIRATION=${{ secrets.JWT_SECRET_REFRESH_EXPIRATION }}" >> .dev.env
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .dev.env
-          echo "GOOGLE_SECRET_KEY=${{ secrets.GOOGLE_SECRET_KEY }}" >> .dev.env
-          echo "SERVER_URI=${{ secrets.SERVER_URI }}" >> .dev.env
-          echo "CLINET_URI=${{ secrets.CLINET_URI }}" >> .dev.env
-          echo "MODEL_PATH=${{ secrets.MODEL_PATH }}" >> .dev.env
-          echo "DATA_PATH=${{ secrets.DATA_PATH }}" >> .dev.env
+          echo "${{ secrets.APPLICATION  }}" >> .dev.env
 
       - name: Login to GitHub Container Registry
         run: echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin

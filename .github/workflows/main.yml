@@ -107,6 +107,6 @@ jobs:
             sudo docker ps
             sudo docker pull ghcr.io/${{ github.repository }}/similarity_backend_app_server:latest
             sudo docker pull ghcr.io/${{ github.repository }}/similarity_backend_nginx:latest
-            sudo docker run -d -p 8082:8082 ghcr.io/${{ github.repository }}/similarity_backend_app_server:latest
+            sudo docker run -d -p 8080:8080 ghcr.io/${{ github.repository }}/similarity_backend_app_server:latest
             sudo docker run -d -p 80:80 ghcr.io/${{ github.repository }}/similarity_backend_nginx:latest
             sudo docker image prune -f

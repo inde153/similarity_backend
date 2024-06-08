@@ -37,22 +37,6 @@ jobs:
           docker tag similarity_backend_nginx:latest ghcr.io/${{ github.repository }}/similarity_backend_nginx:latest
           docker push ghcr.io/${{ github.repository }}/similarity_backend_app_server:latest
           docker push ghcr.io/${{ github.repository }}/similarity_backend_nginx:latest
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code #actions/checkout@v2 액션을 사용하여 리포지토리의 코드를 체크아웃합니다.
-        uses: actions/checkout@v2
-      - name: Create .dev.env file # 필요한 경우 .dev.env 파일을 생성
-        run: |
-          echo "${{ secrets.APPLICATION  }}" >> .dev.env
-
-      - name: Login to GitHub Container Registry
-        run: echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      - name: Pull and run Docker containers
-        run: |
-          docker-compose -f docker-compose.yml pull
-          docker-compose -f docker-compose.yml up -d
 
   deploy_to_ec2:
     runs-on: ubuntu-latest
